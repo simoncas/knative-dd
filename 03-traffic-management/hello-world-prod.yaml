@@ -1,0 +1,15 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: myapp
+  namespace: demo
+spec:
+  template:
+    metadata:
+      name: myapp-prod
+    spec:
+      containers:
+        - image: docker.io/ibmcom/kn-helloworld
+          env:
+            - name: TARGET
+              value: "World From Prod Environment"

@@ -1,0 +1,22 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: myapp
+  namespace: demo
+spec:
+  template:
+    metadata:
+      name: myapp-candidate
+    spec:
+      containers:
+        - image: docker.io/ibmcom/kn-helloworld
+          env:
+            - name: TARGET
+              value: "World From Candidate Environment"
+  traffic:
+    - tag: prod
+      revisionName: myapp-prod
+      percent: 60
+    - tag: candidate
+      revisionName:  myapp-candidate
+      percent: 40
